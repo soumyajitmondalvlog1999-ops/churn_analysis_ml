@@ -158,14 +158,39 @@ if st.button('**Predict Churn**', type="primary"):
     # --- 6. DISPLAY RESULT ---
     st.header('Prediction Result')
     
+    # Get the probabilities for each class
+    prob_stay = prediction_proba[0][0]
+    prob_churn = prediction_proba[0][1]
+
+    # Display the main result (Churn or Stay)
     if prediction[0] == 1:
         st.error('**Result: This customer is LIKELY TO CHURN.**', icon="🚨")
-        st.write(f"Churn Probability: {prediction_proba[0][1] * 100:.2f}%")
     else:
         st.success('**Result: This customer is LIKELY TO STAY.**', icon="✅")
-        st.write(f"Stay Probability: {prediction_proba[0][0] * 100:.2f}%")
-        
-    st.write("---")
-    st.subheader("Input Data for Prediction:")
 
+    # Add an expander to explain what the terms mean
+    with st.expander("What do these results mean?"):
+        st.info("""
+            * **LIKELY TO STAY (Not Churn):** The model predicts this customer is satisfied and will likely remain with the service.
+            * **LIKELY TO CHURN (Churn):** The model predicts this customer is at a high risk of canceling their service.
+        """)
+    
+    st.write("---")
+
+    # Display the detailed probabilities in columns
+    st.subheader("Prediction Probabilities")
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        # Use st.info for a neutral/positive "Stay" probability
+        st.info(f"**Stay Probability:**\n\n# {prob_stay * 100:.2f}%")
+        
+    with col2:
+        # Use st.warning for a "Churn" probability
+        st.warning(f"**Churn Probability:**\n\n# {prob_churn * 100:.2f}%")
+
+    # Display the data that was used for the prediction
+    st.write("---")
+    st.subheader("Input Data Used for Prediction:")
     st.dataframe(input_df)
+
