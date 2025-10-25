@@ -189,8 +189,28 @@ if st.button('**Predict Churn**', type="primary"):
         # Use st.warning for a "Churn" probability
         st.warning(f"**Churn Probability:**\n\n# {prob_churn * 100:.2f}%")
 
-    # Display the data that was used for the prediction
-    st.write("---")
-    st.subheader("Input Data Used for Prediction:")
-    st.dataframe(input_df)
+    # ADD THIS NEW CODE BLOCK:
+    with st.expander("Show data dictionary for the input table"):
+        st.markdown("""
+            * **st**: State (Customer's 2-letter state abbreviation)
+            * **acclen**: Account Length (How long the account has been active)
+            * **arcode**: Area Code (The customer's 3-digit area code)
+            * **intplan**: International Plan (yes/no)
+            * **voice**: Voice Mail Plan (yes/no)
+            * **nummailmes**: Number of Voicemail Messages
+            * **tdmin**: Total Day Minutes
+            * **tdcal**: Total Day Calls
+            * **tdchar**: Total Day Charge
+            * **temin**: Total Evening Minutes
+            * **tecal**: Total Evening Calls
+            * **tecahr**: Total Evening Charge
+            * **tnmin**: Total Night Minutes
+            * **tncal**: Total Night Calls
+            * **tnchar**: Total Night Charge
+            * **timin**: Total International Minutes
+            * **tical**: Total International Calls
+            * **tichar**: Total International Charge
+            * **ncsc**: Number of Customer Service Calls
+        """)
+
 
