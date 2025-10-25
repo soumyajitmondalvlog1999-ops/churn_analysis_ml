@@ -155,7 +155,7 @@ if st.button('**Predict Churn**', type="primary"):
     prediction = model.predict(input_df)
     prediction_proba = model.predict_proba(input_df)
 
-    # --- 6. DISPLAY RESULT ---
+   # --- 6. DISPLAY RESULT ---
     st.header('Prediction Result')
     
     # Get the probabilities for each class
@@ -182,14 +182,19 @@ if st.button('**Predict Churn**', type="primary"):
     col1, col2 = st.columns(2)
     
     with col1:
-        # Use st.info for a neutral/positive "Stay" probability
         st.info(f"**Stay Probability:**\n\n# {prob_stay * 100:.2f}%")
         
     with col2:
-        # Use st.warning for a "Churn" probability
         st.warning(f"**Churn Probability:**\n\n# {prob_churn * 100:.2f}%")
 
-    # ADD THIS NEW CODE BLOCK:
+    # Display the data that was used for the prediction
+    st.write("---")
+    st.subheader("Input Data Used for Prediction:")
+    
+    # THIS IS THE LINE THAT WAS MISSING
+    st.dataframe(input_df) 
+
+    # This expander should come AFTER the dataframe
     with st.expander("Show data dictionary for the input table"):
         st.markdown("""
             * **st**: State (Customer's 2-letter state abbreviation)
@@ -212,5 +217,3 @@ if st.button('**Predict Churn**', type="primary"):
             * **tichar**: Total International Charge
             * **ncsc**: Number of Customer Service Calls
         """)
-
-
