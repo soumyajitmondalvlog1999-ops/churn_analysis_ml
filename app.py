@@ -36,8 +36,6 @@ Enter the customer's details below to predict whether they are likely to churn.
 This model was trained on a public dataset and achieved ~98% accuracy.
 """)
 
-st.header('Customer Information')
-
 # --- 4. CREATE INPUT WIDGETS ---
 st.header('Customer Information')
 
@@ -217,3 +215,4 @@ if st.button('**Predict Churn**', type="primary"):
             * **tichar**: Total International Charge
             * **ncsc**: Number of Customer Service Calls
         """)
+
