@@ -39,43 +39,84 @@ This model was trained on a public dataset and achieved ~98% accuracy.
 st.header('Customer Information')
 
 # --- 4. CREATE INPUT WIDGETS ---
+st.header('Customer Information')
+
 # We use columns to make the layout cleaner
 col1, col2 = st.columns(2)
 
 with col1:
     # --- Categorical Inputs ---
     st.subheader('Categorical Features')
-    st_input = st.selectbox('State (st)', STATE_OPTIONS)
-    arcode_input = st.selectbox('Area Code (arcode)', AREA_CODE_OPTIONS)
-    intplan_input = st.radio('International Plan (intplan)', PLAN_OPTIONS)
-    voice_input = st.radio('Voice Mail Plan (voice)', VOICE_OPTIONS)
+    
+    st_input = st.selectbox(
+        'State (st)', 
+        STATE_OPTIONS,
+        help="The 2-letter abbreviation for the customer's state."
+    )
+    
+    arcode_input = st.selectbox(
+        'Area Code (arcode)', 
+        AREA_CODE_OPTIONS,
+        help="The customer's 3-digit telephone area code."
+    )
+    
+    intplan_input = st.radio(
+        'International Plan (intplan)', 
+        PLAN_OPTIONS,
+        help="Does the customer have an active international plan (yes/no)?"
+    )
+    
+    voice_input = st.radio(
+        'Voice Mail Plan (voice)', 
+        VOICE_OPTIONS,
+        help="Does the customer have an active voice mail plan (yes/no)?"
+    )
 
 with col2:
     # --- Numerical Inputs ---
     st.subheader('Numerical Features')
-    acclen_input = st.number_input('Account Length (acclen)', min_value=0, value=100)
-    nummailmes_input = st.number_input('Number of Voicemail Messages (nummailmes)', min_value=0, value=0)
-    ncsc_input = st.number_input('Number of Customer Service Calls (ncsc)', min_value=0, value=1)
     
-    # You can add the rest of the numerical features here if you want
-    # For this example, I'm only adding a few key ones.
-    # The model will use default values (0) for the rest.
+    acclen_input = st.number_input(
+        'Account Length (acclen)', 
+        min_value=0, 
+        value=100,
+        help="How long the customer has had their account (e.g., in days)."
+    )
     
-    # Let's create dummy inputs for the rest so the model works
-    # A more advanced app would have inputs for all of these.
-    tdmin_input = 0
-    tdcal_input = 0
-    tdchar_input = 0
-    temin_input = 0
-    tecal_input = 0
-    tecahr_input = 0
-    tnmin_input = 0
-    tncal_input = 0
-    tnchar_input = 0
-    timin_input = 0
-    tical_input = 0
-    tichar_input = 0
+    nummailmes_input = st.number_input(
+        'Number of Voicemail Messages (nummailmes)', 
+        min_value=0, 
+        value=0,
+        help="Total number of voicemail messages in the customer's inbox."
+    )
     
+    ncsc_input = st.number_input(
+        'Customer Service Calls (ncsc)', 
+        min_value=0, 
+        value=1,
+        help="Number of calls made by the customer to customer service."
+    )
+    
+    # --- Other Numerical Features (Hidden) ---
+    # For a full app, you would create st.number_input() for these.
+    # For this demo, we'll set them to 0.
+    
+    # We can use st.expander to hide these and make the app cleaner
+    with st.expander("Show other numerical features (demo only)"):
+        st.info("In a full app, you would add inputs for all 15 features. For this demo, the rest are set to 0.", icon="ℹ️")
+        tdmin_input = 0
+        tdcal_input = 0
+        tdchar_input = 0
+        temin_input = 0
+        tecal_input = 0
+        tecahr_input = 0
+        tnmin_input = 0
+        tncal_input = 0
+        tnchar_input = 0
+        timin_input = 0
+        tical_input = 0
+        tichar_input = 0
+
 # --- 5. PREDICTION LOGIC ---
 if st.button('**Predict Churn**', type="primary"):
 
@@ -126,4 +167,5 @@ if st.button('**Predict Churn**', type="primary"):
         
     st.write("---")
     st.subheader("Input Data for Prediction:")
+
     st.dataframe(input_df)
